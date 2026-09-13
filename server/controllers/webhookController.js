@@ -19,7 +19,7 @@ export const handleClerkWebhook = async (req, res) => {
         await sql`
         INSERT INTO users (id, name, email, image, plan)
         VALUES (${userId}, ${name}, ${primaryEmail}, ${image}, ${plan})
-        ON CONFLICT (email) DO UPDATE SET
+        ON CONFLICT (id) DO UPDATE SET
         id = EXCLUDED.id,
         name = EXCLUDED.name,
         image = EXCLUDED.image,
@@ -37,7 +37,7 @@ export const handleClerkWebhook = async (req, res) => {
         await sql`
         INSERT INTO users (id, name, email, image )
         VALUES (${userId}, ${name}, ${primaryEmail}, ${image})
-        ON CONFLICT (email) DO UPDATE SET
+        ON CONFLICT (id) DO UPDATE SET
         id = EXCLUDED.id,
         name = EXCLUDED.name,
         image = EXCLUDED.image,
@@ -63,6 +63,6 @@ export const handleClerkWebhook = async (req, res) => {
     console.error("Error verifying Clerk Webhook:", err.message || err);
     return res
       .status(400)
-      .json({ err: "Webhook verification failed: " + (err.message || err) });
+      .json({ error: "Webhook verification failed: " + (err.message || err) });
   }
 };
