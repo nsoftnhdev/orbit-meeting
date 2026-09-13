@@ -75,7 +75,7 @@ export function setupSocketIO(io) {
           const existingUsers = Array.from(roomParticipants.values());
 
           // Add new participants to socket state
-          roomParticipants.set(socket.is, currentUser);
+          roomParticipants.set(socket.id, currentUser);
 
           // Save participants into DB if not already present
           const userId = user?.id || null;
@@ -108,7 +108,7 @@ export function setupSocketIO(io) {
     socket.on("offer", ({ targetSocketId, callerSocketId, sdp }) => {
       io.to(targetSocketId).emit("offer", {
         callerSocketId,
-        stp,
+        sdp,
         callerUser: currentUser,
       });
     });
@@ -118,7 +118,7 @@ export function setupSocketIO(io) {
     socket.on("answer", ({ targetSocketId, responderSocketId, sdp }) => {
       io.to(targetSocketId).emit("answer", {
         responderSocketId,
-        stp,
+        sdp,
       });
     });
 
@@ -190,7 +190,7 @@ export function setupSocketIO(io) {
         SET status = 'ended', ended_at = NOW()
         WHERE meeting_id = ${roomId}`;
 
-        io.on(roomId).emit("meeting-ended", {
+        io.to(roomId).emit("meeting-ended", {
           message: "The meeting has been ended by the host.",
         });
 

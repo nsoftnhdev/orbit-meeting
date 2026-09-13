@@ -76,7 +76,7 @@ export const createMeeting = async (req, res) => {
     });
   } catch (error) {
     console.error("Create meeting failed:", error);
-    (res.status(500), json({ error: "Failed to create meeting" }));
+    res.status(500).json({ error: "Failed to create meeting" });
   }
 };
 
@@ -114,7 +114,7 @@ export const getMeeting = async (req, res) => {
     });
   } catch (error) {
     console.error("Fetch meeting failed:", error);
-    (res.status(500), json({ error: "Failed to fetch meeting" }));
+    res.status(500).json({ error: "Failed to fetch meeting" });
   }
 };
 
@@ -143,7 +143,7 @@ export const getUserSessions = async (req, res) => {
         SELECT id, sender_id, sender_name, text, timestamp
         FROM meeting_messages
         WHERE meeting_id = ${m.id}
-        ORDER BY timstamp ASC`;
+        ORDER BY timestamp ASC`;
 
         return {
           id: m.id,
@@ -177,7 +177,7 @@ export const getUserSessions = async (req, res) => {
     res.json({ meetings: formattedMeetings });
   } catch (error) {
     console.error("Get user sessions failed:", error);
-    (res.status(500), json({ error: "Failed to get user sessions" }));
+    res.status(500).json({ error: "Failed to get user sessions" });
   }
 };
 
@@ -216,7 +216,7 @@ export const getSessionDetails = async (req, res) => {
     WHERE mp.meeting_id = ${m.id}`;
 
     const messages = await sql`
-    SELECT id, sender_id, sender_name, text, timstamp
+    SELECT id, sender_id, sender_name, text, timestamp
     FROM meeting_messages
     WHERE meeting_id = ${m.id}
     ORDER BY timestamp ASC`;
@@ -251,7 +251,7 @@ export const getSessionDetails = async (req, res) => {
     res.json({ meeting: formattedMeeting });
   } catch (error) {
     console.error("Get session details failed:", error);
-    (res.status(500), json({ error: "Failed to get session details" }));
+    res.status(500).json({ error: "Failed to get session details" });
   }
 };
 
@@ -284,6 +284,6 @@ export const getMeetingStats = async (req, res) => {
     });
   } catch (error) {
     console.error("Get meeting stats failed:", error);
-    (res.status(500), json({ error: "Failed to get meeting stats" }));
+    res.status(500).json({ error: "Failed to get meeting stats" });
   }
 };
