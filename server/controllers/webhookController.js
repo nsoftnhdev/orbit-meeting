@@ -22,6 +22,7 @@ export const handleClerkWebhook = async (req, res) => {
         ON CONFLICT (id) DO UPDATE SET
         id = EXCLUDED.id,
         name = EXCLUDED.name,
+        email: EXCLUDED.email,
         image = EXCLUDED.image,
         plan = EXCLUDED.plan,
         updated_at = NOW()`;
@@ -39,6 +40,7 @@ export const handleClerkWebhook = async (req, res) => {
         VALUES (${userId}, ${name}, ${primaryEmail}, ${image})
         ON CONFLICT (id) DO UPDATE SET
         id = EXCLUDED.id,
+        email: EXCLUDED.email,
         name = EXCLUDED.name,
         image = EXCLUDED.image,
         updated_at = NOW()`;
