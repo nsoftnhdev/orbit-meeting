@@ -8,7 +8,7 @@ const SessionCard = ({ session, onOpenDetails, onRejoin }) => {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-xs font-mono text-slate-500 font-medium bg-slate-500/5 px-2.5 py-1 rounded-md">
-            ID: {session.meeetingId}
+            ID: {session.meetingId}
           </span>
           <span
             className={`text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5 ${isEnded ? "bg-slate-500/5 text-slate-500" : "bg-emerald-500/5 text-emerald-500"}`}
@@ -47,7 +47,7 @@ const SessionCard = ({ session, onOpenDetails, onRejoin }) => {
           <MessageSquareIcon className="w-4 h-4 text-primary" />
           <span>
             <strong className="font-semibold text-slate-900">
-              {session.participants?.length || 0}
+              {session.messages?.length || 0}
             </strong>{" "}
             Messages
           </span>
@@ -57,14 +57,14 @@ const SessionCard = ({ session, onOpenDetails, onRejoin }) => {
       {/* Actions */}
       <div className="flex items-center justify-between gap-3 pt-3">
         <button
-          onClick={() => onOpenDetails(session.id)}
+          onClick={() => onOpenDetails(session.meetingId)}
           className="w-full bg-slate-400/10 hover:bg-slate-400/20 text-slate-800 font-medium py-2.5 px-4 rounded-full text-xs transition-all cursor-pointer text-center"
         >
           View Details
         </button>
         {!isEnded && (
           <button
-            onClick={() => onRejoin(session.meeetingId)}
+            onClick={() => onRejoin(session.meetingId)}
             className="w-full bg-primary hover:bg-primary-hover text-white font-medium py-2.5 px-4 rounded-full text-xs transition-all shadow-xs cursor-pointer text-center"
           >
             Re-join
